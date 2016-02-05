@@ -9,12 +9,16 @@
 import UIKit
 import AFNetworking
 
-class PhotosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
+class PhotosViewController: UIViewController, UITableViewDataSource, UITableViewDelegate/*, UIScrollViewDelegate*/ {
 
     @IBOutlet weak var userStreamTableView: UITableView!
     
     var photos: [NSDictionary]?
     var refreshControl: UIRefreshControl!
+    
+    
+    /*var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,12 +26,25 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         userStreamTableView.dataSource = self
         userStreamTableView.delegate = self
         userStreamTableView.rowHeight = 320
-        
+
         refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: "getNewsFeed", forControlEvents: UIControlEvents.ValueChanged)
         self.userStreamTableView.insertSubview(refreshControl, atIndex: 0)
         
         getNewsFeed()
+        
+        
+        /*
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, userStreamTableView.contentSize.height, userStreamTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        userStreamTableView.addSubview(loadingMoreView!)
+        
+        var insets = userStreamTableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        userStreamTableView.contentInset = insets
+        */
 
         // Do any additional setup after loading the view.
         
@@ -39,10 +56,6 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         // Dispose of any resources that can be recreated.
     }
     
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
-    }
-    
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         if let photos = photos {
             return photos.count
@@ -51,12 +64,15 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         }
     }
     
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("UserCell", forIndexPath: indexPath) as! UserCell
         
         let photo = photos![indexPath.section]
-
-        let images = (photo["images"] as! NSDictionary)["standard_resolution"] as! NSDictionary
+        let images = (photo["images"] as! NSDictionary) ["standard_resolution"] as! NSDictionary
         let photoUrl = NSURL(string: images["url"] as! String)
         cell.photoView.setImageWithURL(photoUrl!)
         
@@ -67,10 +83,8 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     func getNewsFeed() {
         let clientId = "e05c462ebd86446ea48a5af73769b602"
         let url = NSURL(string:"https://api.instagram.com/v1/media/popular?client_id=\(clientId)")
-        
         // Create the NSURLRequest
         let request = NSURLRequest(URL: url!)
-        
         // Configure session so that completion handler is executed on main UI thread
         let session = NSURLSession(
             configuration: NSURLSessionConfiguration.defaultSessionConfiguration(),
@@ -85,8 +99,15 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
                     if let responseDictionary = try! NSJSONSerialization.JSONObjectWithData(
                         data, options:[]) as? NSDictionary {
                             NSLog("response: \(responseDictionary)")
-                            
                             self.photos = responseDictionary["data"] as? [NSDictionary]
+                            
+                            /*
+                            // Update flag
+                            self.isMoreDataLoading = false
+                            // Stop the loading indicator
+                            self.loadingMoreView!.stopAnimating()
+                            */
+
                             self.userStreamTableView.reloadData()
                             self.refreshControl?.endRefreshing()
 
@@ -134,5 +155,38 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
-
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let photoDetailViewController = segue.destinationViewController as! PhotosDetailViewController
+        let indexPath = userStreamTableView.indexPathForCell(sender as! UserCell)
+        
+        let photo = photos![(indexPath?.section)!]
+        let images = (photo["images"] as! NSDictionary) ["standard_resolution"] as! NSDictionary
+        let photoUrl = NSURL(string: images["url"] as! String)
+        
+        photoDetailViewController.imageUrl = photoUrl!
+    
+    }
+    
+    /*func scrollViewDidScroll(scrollView: UIScrollView) {
+        if (!isMoreDataLoading) {
+            // Calculate the position of one screen length before the bottom of the results
+            let scrollViewContentHeight = userStreamTableView.contentSize.height
+            let scrollOffsetThreshold = scrollViewContentHeight - userStreamTableView.bounds.size.height
+            
+            // When the user has scrolled past the threshold, start requesting
+            if(scrollView.contentOffset.y > scrollOffsetThreshold && userStreamTableView.dragging) {
+                isMoreDataLoading = true
+                
+                // Update position of loadingMoreView, and start loading indicator
+                let frame = CGRectMake(0, userStreamTableView.contentSize.height, userStreamTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+                loadingMoreView?.frame = frame
+                loadingMoreView!.startAnimating()
+            
+                
+                // Code to load more results
+                getNewsFeed()
+            }
+        }
+    }*/
 }

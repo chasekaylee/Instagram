@@ -13,6 +13,8 @@
 		E46C25171C62D021005FE05C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E46C25151C62D021005FE05C /* LaunchScreen.storyboard */; };
 		E46C25211C62D0C4005FE05C /* PhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46C25201C62D0C4005FE05C /* PhotosViewController.swift */; };
 		E46C25231C62F101005FE05C /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46C25221C62F101005FE05C /* UserCell.swift */; };
+		E48187C11C642836006516F5 /* PhotosDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48187C01C642836006516F5 /* PhotosDetailViewController.swift */; };
+		E48187C51C6437DF006516F5 /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48187C41C6437DF006516F5 /* InfiniteScrollActivityView.swift */; };
 		F5C04A16F6E07207DFC872F1 /* Pods_Instagram.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C95260415A731D841E35E718 /* Pods_Instagram.framework */; };
 /* End PBXBuildFile section */
 
@@ -28,6 +30,8 @@
 		E46C25181C62D021005FE05C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E46C25201C62D0C4005FE05C /* PhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosViewController.swift; sourceTree = "<group>"; };
 		E46C25221C62F101005FE05C /* UserCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		E48187C01C642836006516F5 /* PhotosDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosDetailViewController.swift; sourceTree = "<group>"; };
+		E48187C41C6437DF006516F5 /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,6 +99,7 @@
 			isa = PBXGroup;
 			children = (
 				E46C25201C62D0C4005FE05C /* PhotosViewController.swift */,
+				E48187C01C642836006516F5 /* PhotosDetailViewController.swift */,
 			);
 			name = "view controllers";
 			sourceTree = "<group>";
@@ -103,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				E46C25221C62F101005FE05C /* UserCell.swift */,
+				E48187C41C6437DF006516F5 /* InfiniteScrollActivityView.swift */,
 			);
 			name = views;
 			sourceTree = "<group>";
@@ -230,6 +236,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E48187C51C6437DF006516F5 /* InfiniteScrollActivityView.swift in Sources */,
+				E48187C11C642836006516F5 /* PhotosDetailViewController.swift in Sources */,
 				E46C250D1C62D020005FE05C /* AppDelegate.swift in Sources */,
 				E46C25211C62D0C4005FE05C /* PhotosViewController.swift in Sources */,
 				E46C25231C62F101005FE05C /* UserCell.swift in Sources */,
