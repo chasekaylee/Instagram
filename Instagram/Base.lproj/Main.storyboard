@@ -41,7 +41,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
-                    <navigationItem key="navigationItem" id="nFl-j2-fqx"/>
+                    <navigationItem key="navigationItem" title="Instagram" id="nFl-j2-fqx"/>
                     <connections>
                         <outlet property="userStreamTableView" destination="kMC-p1-Kzk" id="jm0-C9-k7U"/>
                     </connections>

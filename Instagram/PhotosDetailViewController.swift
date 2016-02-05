@@ -18,7 +18,6 @@ class PhotosDetailViewController: UIViewController {
         super.viewDidLoad()
         
         photoView.setImageWithURL(imageUrl)
-        //photoView.setImageWithURL(photoUrl)
 
         // Do any additional setup after loading the view.
     }

@@ -17,8 +17,8 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     var refreshControl: UIRefreshControl!
     
     
-    /*var isMoreDataLoading = false
-    var loadingMoreView:InfiniteScrollActivityView?*/
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -34,7 +34,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         getNewsFeed()
         
         
-        /*
+        
         // Set up Infinite Scroll loading indicator
         let frame = CGRectMake(0, userStreamTableView.contentSize.height, userStreamTableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
         loadingMoreView = InfiniteScrollActivityView(frame: frame)
@@ -44,7 +44,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
         var insets = userStreamTableView.contentInset;
         insets.bottom += InfiniteScrollActivityView.defaultHeight;
         userStreamTableView.contentInset = insets
-        */
+        
 
         // Do any additional setup after loading the view.
         
@@ -101,13 +101,11 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
                             NSLog("response: \(responseDictionary)")
                             self.photos = responseDictionary["data"] as? [NSDictionary]
                             
-                            /*
+                            
                             // Update flag
                             self.isMoreDataLoading = false
                             // Stop the loading indicator
                             self.loadingMoreView!.stopAnimating()
-                            */
-
                             self.userStreamTableView.reloadData()
                             self.refreshControl?.endRefreshing()
 
@@ -168,7 +166,7 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
     
     }
     
-    /*func scrollViewDidScroll(scrollView: UIScrollView) {
+    func scrollViewDidScroll(scrollView: UIScrollView) {
         if (!isMoreDataLoading) {
             // Calculate the position of one screen length before the bottom of the results
             let scrollViewContentHeight = userStreamTableView.contentSize.height
@@ -188,5 +186,5 @@ class PhotosViewController: UIViewController, UITableViewDataSource, UITableView
                 getNewsFeed()
             }
         }
-    }*/
+    }
 }
